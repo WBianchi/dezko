@@ -1,0 +1,489 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  nome      String
+  email     String   @unique
+  senha     String
+  espacos   Espaco[]
+}
+
+model Espaco {
+  id                        String               @id @default(cuid())
+  createdAt                 DateTime             @default(now())
+  updatedAt                 DateTime             @updatedAt
+  nome                      String
+  endereco                  String?
+  cidade                    String?
+  estado                    String?
+  descricao                 String?
+  bairro                    String?
+  cep                       String?
+  status                    String               @default("ativo")
+  email                     String               @unique
+  mercadoPagoAccessToken    String?
+  mercadoPagoRefreshToken   String?
+  adminId                   String
+  mercadoPagoUserId         String?
+  mercadoPagoTokenExpiresAt DateTime?
+  facebook                  String?
+  instagram                 String?
+  latitude                  Float?
+  longitude                 Float?
+  telefone                  String?
+  website                   String?
+  whatsapp                  String?
+  senha                     String
+  cnpj                      String?
+  mercadoPagoIntegrated     Boolean              @default(false)
+  mercadoPagoPublicKey      String?
+  razaoSocial               String?
+  capacidade                String?
+  fotoCapa                  String?
+  fotoPrincipal             String?              @default("")
+  imagens                   String[]
+  complemento               String?
+  numero                    String?
+  stripeConnectAccountId    String?
+  openPixWalletId           String?
+  adicionais                Adicionais[]
+  agendas                   Agenda[]
+  assinaturas               Assinatura[]
+  avaliacoes                Avaliacao[]
+  beneficios                Beneficios[]
+  admin                     Admin                @relation(fields: [adminId], references: [id])
+  horarios                  Horarios[]
+  mensagens                 Mensagem[]
+  pedidos                   Pedido[]
+  pixCobrancas              PixCobranca[]
+  planos                    Plano[]
+  reservas                  Reservation[]
+  comissao                  SpaceCommission?
+  configuracao              SpaceConfig?
+  vantagens                 Vantagens[]
+  categorias                CategoriaEspaco[]    @relation("EspacoCategoria")
+  subcategorias             SubCategoriaEspaco[] @relation("EspacoSubCategoria")
+  usuarios                  Usuario[]            @relation("EspacoUsuario")
+
+  @@index([adminId])
+}
+
+model Horarios {
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  espacoId   String
+  diaSemana  String
+  horaInicio String
+  horaFim    String
+  espaco     Espaco   @relation(fields: [espacoId], references: [id])
+
+  @@index([espacoId])
+}
+
+model Adicionais {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  espacoId  String
+  nome      String
+  espaco    Espaco   @relation(fields: [espacoId], references: [id])
+
+  @@index([espacoId])
+}
+
+model Vantagens {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  espacoId  String
+  nome      String
+  espaco    Espaco   @relation(fields: [espacoId], references: [id])
+
+  @@index([espacoId])
+}
+
+model Beneficios {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  espacoId  String
+  nome      String
+  espaco    Espaco   @relation(fields: [espacoId], references: [id])
+
+  @@index([espacoId])
+}
+
+model Usuario {
+  id               String        @id @default(cuid())
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  nome             String
+  email            String        @unique
+  senha            String
+  avatar           String?
+  cpf              String?
+  telefone         String?
+  stripeCustomerId String?
+  avaliacoes       Avaliacao[]
+  mensagens        Mensagem[]
+  pedidos          Pedido[]
+  reservas         Reservation[]
+  espacos          Espaco[]      @relation("EspacoUsuario")
+}
+
+model Plano {
+  id              String           @id @default(uuid())
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  nome            String
+  preco           Float
+  descricao       String?
+  duracao         Int
+  espacoId        String
+  limiteAgendas   Int              @default(2)
+  tipo            String           @default("basico")
+  assinaturas     Assinatura[]
+  beneficiosPlano BeneficioPlano[]
+  pedidos         Pedido[]
+  commission      PlanCommission?
+  espaco          Espaco           @relation(fields: [espacoId], references: [id])
+  reservas        Reservation[]
+}
+
+model Pedido {
+  id                      String           @id @default(cuid())
+  createdAt               DateTime         @default(now())
+  updatedAt               DateTime         @updatedAt
+  usuarioId               String
+  espacoId                String
+  dataFim                 DateTime
+  dataInicio              DateTime
+  formaPagamento          FormaDePagamento @default(PIX)
+  planoId                 String
+  statusPedido            StatusDoPedido   @default(PENDENTE)
+  valor                   Float
+  agendaId                String?
+  mercadoPagoPaymentId    String?
+  mercadoPagoPreferenceId String?
+  stripePaymentIntentId   String?
+  stripeSessionId         String?
+  openPixChargeId         String?
+  agenda                  Agenda?          @relation(fields: [agendaId], references: [id])
+  espaco                  Espaco           @relation(fields: [espacoId], references: [id])
+  plano                   Plano            @relation(fields: [planoId], references: [id])
+  usuario                 Usuario          @relation(fields: [usuarioId], references: [id])
+}
+
+model Avaliacao {
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  espacoId   String
+  comentario String?
+  nota       Int
+  usuarioId  String
+  espaco     Espaco   @relation(fields: [espacoId], references: [id])
+  usuario    Usuario  @relation(fields: [usuarioId], references: [id])
+}
+
+model Mensagem {
+  id         String     @id @default(uuid())
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  espacoId   String
+  usuarioId  String
+  assunto    String
+  lida       Boolean    @default(false)
+  mensagem   String
+  importante Boolean    @default(false)
+  arquivada  Boolean    @default(false)
+  espaco     Espaco     @relation(fields: [espacoId], references: [id])
+  usuario    Usuario    @relation(fields: [usuarioId], references: [id])
+  respostas  Resposta[]
+}
+
+model Resposta {
+  id         String   @id @default(uuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  mensagem   String
+  mensagemId String
+  origem     Mensagem @relation(fields: [mensagemId], references: [id], onDelete: Cascade)
+}
+
+model Configuracao {
+  id              String   @id @default("1")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  nomeSite        String?
+  descricaoSite   String?
+  emailContato    String?
+  telefoneContato String?
+  enderecoEmpresa String?
+  tipo            String   @unique
+  valor           String   @default("{}")
+}
+
+model Agenda {
+  id          String        @id @default(cuid())
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  titulo      String
+  descricao   String        @default("")
+  tipoReserva TipoReserva
+  turno       Turno?
+  horaInicio  String?
+  horaFim     String?
+  dataInicio  DateTime
+  dataFim     DateTime
+  valorHora   Float?
+  valorTurno  Float?
+  valorDia    Float?
+  espacoId    String
+  espaco      Espaco        @relation(fields: [espacoId], references: [id])
+  pedidos     Pedido[]
+  reservas    Reservation[]
+}
+
+model CategoriaEspaco {
+  id            String               @id @default(cuid())
+  nome          String
+  slug          String               @unique
+  descricao     String?
+  icone         String?
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+  subcategorias SubCategoriaEspaco[] @relation("CategoriaSub")
+  espacos       Espaco[]             @relation("EspacoCategoria")
+}
+
+model SubCategoriaEspaco {
+  id          String          @id @default(cuid())
+  nome        String
+  slug        String          @unique
+  descricao   String?
+  icone       String?
+  categoriaId String
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  categoria   CategoriaEspaco @relation("CategoriaSub", fields: [categoriaId], references: [id], onDelete: Cascade)
+  espacos     Espaco[]        @relation("EspacoSubCategoria")
+
+  @@index([categoriaId])
+}
+
+model Reservation {
+  id                      String            @id @default(cuid())
+  userId                  String
+  createdAt               DateTime          @default(now())
+  updatedAt               DateTime          @updatedAt
+  dataFim                 DateTime
+  dataInicio              DateTime
+  espacoId                String
+  mercadoPagoPaymentId    String?
+  mercadoPagoPreferenceId String?
+  planoId                 String?
+  valor                   Float
+  agendaId                String
+  status                  ReservationStatus @default(PENDENTE)
+  pagamentos              Pagamento[]
+  agenda                  Agenda            @relation(fields: [agendaId], references: [id])
+  espaco                  Espaco            @relation(fields: [espacoId], references: [id])
+  plano                   Plano?            @relation(fields: [planoId], references: [id])
+  usuario                 Usuario           @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([espacoId])
+  @@index([planoId])
+  @@index([agendaId])
+}
+
+model Pagamento {
+  id        String      @id @default(cuid())
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  valor     Float
+  status    String      @default("pendente")
+  gateway   String      @default("mercadopago")
+  gatewayId String?     @unique
+  metadata  Json?
+  reservaId String
+  reserva   Reservation @relation(fields: [reservaId], references: [id])
+
+  @@index([reservaId])
+}
+
+model SpaceConfig {
+  id          String @id
+  mercadoPago Json?
+  espaco      Espaco @relation(fields: [id], references: [id])
+}
+
+model SpaceCommission {
+  id              String   @id @default(cuid())
+  spaceId         String   @unique
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  commissionType  String   @default("percentage")
+  commissionValue Float
+  espaco          Espaco   @relation(fields: [spaceId], references: [id])
+}
+
+model ConfigSplit {
+  id                   String   @id @default(cuid())
+  type                 String   @unique
+  commissionType       String   @default("percentage")
+  commissionValue      Float    @default(10.0)
+  enablePlanCommission Boolean  @default(false)
+  openPixEnabled       Boolean  @default(true)
+  openPixWalletId      String?
+  stripeEnabled        Boolean  @default(true)
+  stripeAccountId      String?
+  stripeCommissionRate Float    @default(10.0)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model PlanCommission {
+  id              String   @id @default(cuid())
+  planId          String   @unique
+  commissionType  String   @default("percentage")
+  commissionValue Float    @default(10.0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  plan            Plano    @relation(fields: [planId], references: [id])
+}
+
+model Config {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Assinatura {
+  id                      String                @id @default(cuid())
+  createdAt               DateTime              @default(now())
+  updatedAt               DateTime              @updatedAt
+  status                  String                @default("ATIVA")
+  dataInicio              DateTime
+  dataExpiracao           DateTime
+  valor                   Float
+  espacoId                String
+  formaPagamento          FormaDePagamento?     @default(PIX)
+  mercadoPagoPaymentId    String?
+  mercadoPagoPreferenceId String?
+  planoId                 String?
+  stripeCustomerId        String?
+  stripePaymentMethodId   String?
+  stripePriceId           String?
+  stripeSubscriptionId    String?
+  espaco                  Espaco                @relation(fields: [espacoId], references: [id])
+  plano                   Plano?                @relation(fields: [planoId], references: [id])
+  renovacoes              RenovacaoAssinatura[]
+
+  @@index([espacoId])
+  @@index([planoId])
+}
+
+model RenovacaoAssinatura {
+  id                      String            @id @default(cuid())
+  createdAt               DateTime          @default(now())
+  updatedAt               DateTime          @updatedAt
+  assinaturaId            String
+  dataPagamento           DateTime
+  valor                   Float
+  status                  String            @default("PAGO")
+  gateway                 String            @default("mercadopago")
+  gatewayId               String?
+  formaPagamento          FormaDePagamento? @default(PIX)
+  mercadoPagoPaymentId    String?
+  mercadoPagoPreferenceId String?
+  stripeInvoiceId         String?
+  stripePaymentIntentId   String?
+  assinatura              Assinatura        @relation(fields: [assinaturaId], references: [id])
+
+  @@index([assinaturaId])
+}
+
+model BeneficioPlano {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  nome      String
+  planoId   String
+  plano     Plano    @relation(fields: [planoId], references: [id])
+
+  @@index([planoId])
+}
+
+model PixCobranca {
+  id              String   @id
+  espacoId        String
+  pedidoId        String?
+  valor           Int
+  valorLojista    Int
+  valorPlataforma Int
+  status          String   @default("ATIVA")
+  descricao       String
+  qrCodeUrl       String
+  brCode          String
+  transactionId   String
+  clienteNome     String?
+  clienteEmail    String?
+  clienteTelefone String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  espaco          Espaco   @relation(fields: [espacoId], references: [id])
+
+  @@index([espacoId])
+  @@index([pedidoId])
+}
+
+enum TipoReserva {
+  HORA
+  TURNO
+  DIA
+}
+
+enum Turno {
+  MANHA
+  TARDE
+  NOITE
+}
+
+enum StatusDoPedido {
+  PENDENTE
+  PAGO
+  CANCELADO
+}
+
+enum FormaDePagamento {
+  PIX
+  CARTAO
+  BOLETO
+}
+
+enum Role {
+  usuario
+  admin
+}
+
+enum ReservationStatus {
+  PENDENTE
+  PAGO
+  PAGAMENTO_REJEITADO
+  PAGAMENTO_PENDENTE
+  CANCELADO
+}
