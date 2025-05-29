@@ -124,11 +124,11 @@ model Beneficios {
 }
 
 model Usuario {
-  id               String        @id @default(cuid())
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
+  id               String           @id @default(cuid())
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
   nome             String
-  email            String        @unique
+  email            String           @unique
   senha            String
   avatar           String?
   cpf              String?
@@ -138,7 +138,9 @@ model Usuario {
   mensagens        Mensagem[]
   pedidos          Pedido[]
   reservas         Reservation[]
-  espacos          Espaco[]      @relation("EspacoUsuario")
+  espacos          Espaco[]         @relation("EspacoUsuario")
+  blogPosts        BlogPost[]       // Relação com os posts do blog 
+  comentarios      BlogComentario[] // Relação com os comentários do blog
 }
 
 model Plano {
@@ -372,6 +374,62 @@ model Config {
   updatedAt DateTime @updatedAt
 }
 
+model BlogPost {
+  id                String           @id @default(cuid())
+  titulo            String
+  slug              String           @unique
+  descricao         String?
+  conteudo          String           @db.Text
+  foto              String?
+  status            PostStatus       @default(RASCUNHO)
+  autorId           String
+  pontuacaoSeo      Int              @default(0)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  tags              BlogTag[]        @relation("PostToTag")
+  categorias        CategoriaBlog[]  @relation("PostToCategoria")
+  comentarios       BlogComentario[]
+  postsRelacionados BlogPost[]       @relation("PostsRelacionados")
+  relacionadoCom    BlogPost[]       @relation("PostsRelacionados")
+  autor             Usuario          @relation(fields: [autorId], references: [id])
+
+  @@index([autorId])
+}
+
+model BlogTag {
+  id        String     @id @default(cuid())
+  nome      String     @unique
+  slug      String     @unique
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  posts     BlogPost[] @relation("PostToTag")
+}
+
+model CategoriaBlog {
+  id        String     @id @default(cuid())
+  nome      String     @unique
+  slug      String     @unique
+  descricao String?
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  posts     BlogPost[] @relation("PostToCategoria")
+}
+
+model BlogComentario {
+  id        String    @id @default(cuid())
+  conteudo  String
+  autorId   String
+  postId    String
+  aprovado  Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  autor     Usuario   @relation(fields: [autorId], references: [id])
+  post      BlogPost  @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@index([autorId])
+  @@index([postId])
+}
+
 model Assinatura {
   id                      String                @id @default(cuid())
   createdAt               DateTime              @default(now())
@@ -482,8 +540,14 @@ enum Role {
 
 enum ReservationStatus {
   PENDENTE
+  CONFIRMADA
+  CANCELADA
   PAGO
   PAGAMENTO_REJEITADO
   PAGAMENTO_PENDENTE
-  CANCELADO
+}
+
+enum PostStatus {
+  RASCUNHO
+  PUBLICADO
 }
