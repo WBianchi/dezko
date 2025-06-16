@@ -238,7 +238,7 @@ export function MeuPerfilTab() {
               <FormItem>
                 <FormLabel>Nome</FormLabel>
                 <FormControl>
-                  <Input placeholder="Nome do espaço" {...field} />
+                  <Input placeholder="Nome de usuário" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

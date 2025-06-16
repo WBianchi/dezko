@@ -126,7 +126,7 @@ export function SearchSection() {
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-blue-700">
               <Typewriter
                 options={{
-                  strings: ['Para Seu Negócio', 'Para Seus Eventos', 'Para Suas Reuniões'],
+                  strings: ['Aluguel comercial flexível!'],
                   autoStart: true,
                   loop: true,
                   delay: 50,
@@ -144,10 +144,7 @@ export function SearchSection() {
           transition={{ delay: 0.2, duration: 0.8 }}
           className={`${poppins.className} text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mt-6`}
         >
-          A maior plataforma de locação de espaços corporativos do Brasil. 
-          Salas comerciais, coworkings e escritórios com{' '}
-          <span className="text-blue-600 font-semibold">flexibilidade</span> e{' '}
-          <span className="text-blue-600 font-semibold">praticidade</span>.
+          A maior plataforma de locação de espaços comerciais do Brasil. Escritórios, cozinhas, salões de beleza, consultórios e muito mais para quem tem demanda flexível e quer praticidade. 
         </motion.p>
       </div>
 

@@ -85,7 +85,7 @@ export function Topbar({ userType }: TopbarProps) {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Minha Conta</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <Link href={`/dashboard/${role}/perfil`}>
+              <Link href={`/dashboard/${role}/configuracoes`}>
                 <DropdownMenuItem>
                   <User className="mr-2 h-4 w-4" /> Perfil
                 </DropdownMenuItem>
@@ -95,7 +95,7 @@ export function Topbar({ userType }: TopbarProps) {
                   <Settings className="mr-2 h-4 w-4" /> Configurações
                 </DropdownMenuItem>
               </Link>
-              <Link href={`/dashboard/${role}/seguranca`}>
+              <Link href={`/dashboard/${role}/configuracoes`}>
                 <DropdownMenuItem>
                   <Shield className="mr-2 h-4 w-4" /> Segurança
                 </DropdownMenuItem>

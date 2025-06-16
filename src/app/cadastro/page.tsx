@@ -466,13 +466,13 @@ export default function CadastroPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label htmlFor="nome" className="block text-sm font-medium text-gray-700 mb-1">
-              Nome do Espaço
+              Nome de usuário
             </label>
             <Input
               id="nome"
               name="nome"
               required
-              placeholder="Nome do seu espaço"
+              placeholder="Digite seu nome de usuário"
             />
           </div>
 

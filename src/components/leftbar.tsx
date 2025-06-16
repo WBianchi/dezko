@@ -149,7 +149,7 @@ const espacoMenuItems: MenuItem[] = [
     icon: LayoutDashboard,
   },
   {
-    title: 'Agenda',
+    title: 'Espaços',
     href: '/dashboard/espaco/agenda',
     icon: Calendar,
   },
@@ -323,32 +323,7 @@ export function Leftbar({ userType }: LeftbarProps) {
         onMouseEnter={() => !isMobile && setMenuHovered(true)}
         onMouseLeave={() => !isMobile && setMenuHovered(false)}
       >
-        {/* Botão para colapsar o menu */}
-        <div className="px-3 py-2 flex justify-center">
-          <button 
-            onClick={() => setCollapsed(!collapsed)}
-            className="flex items-center justify-center h-10 w-10 rounded-lg bg-white dark:bg-gray-900 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors shadow-sm border border-gray-100 dark:border-gray-800"
-          >
-            <Menu className="h-5 w-5 text-blue-600 dark:text-blue-400" />
-          </button>
-        </div>
-
-        {/* Perfil do usuário */}
-        <motion.div 
-          className="flex flex-col items-center justify-center px-4 py-6 border-b border-gray-100 dark:border-gray-800"
-          variants={collapsed ? profileVariants : {}}
-        >
-          <Avatar className="h-16 w-16 mb-3">
-            <AvatarImage src={session?.user?.image || ''} alt={session?.user?.name || ''} />
-            <AvatarFallback className="bg-gradient-to-br from-blue-500 to-blue-700 text-white text-lg">
-              {session?.user?.name?.[0]?.toUpperCase() || 'U'}
-            </AvatarFallback>
-          </Avatar>
-          <motion.div className="text-center" variants={textVariants}>
-            <h3 className="font-medium text-gray-900 dark:text-gray-100">{session?.user?.name || 'Usuário'}</h3>
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{session?.user?.email || ''}</p>
-          </motion.div>
-        </motion.div>
+       
 
         {/* Menu de navegação */}
         <div className="flex-1 overflow-y-auto py-6 px-4">

@@ -469,7 +469,7 @@ export function Nav() {
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="ghost" className="group">
-                Departamentos
+                Espaços
                 <Grid className="ml-2 h-4 w-4 transition-transform group-hover:scale-110" />
               </Button>
             </SheetTrigger>
@@ -529,14 +529,7 @@ export function Nav() {
             </SheetContent>
           </Sheet>
 
-          <Button 
-            variant="ghost" 
-            className="group"
-            onClick={() => setShowCategorias(true)}
-          >
-            Espaços
-            <ChevronDown className="ml-2 h-4 w-4 transition-transform group-hover:rotate-180" />
-          </Button>
+        
           
           <Link href="/sobre-nos">
             <Button variant="ghost">Sobre Nós</Button>

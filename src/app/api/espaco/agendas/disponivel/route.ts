@@ -62,7 +62,7 @@ export async function GET(req: Request) {
         totalDisponivel: 0,
         totalUtilizado: espaco?.agendas?.length || 0,
         limiteAgendas: 0,
-        mensagem: "Você não possui uma assinatura ativa. Assine um plano para criar agendas."
+        mensagem: "Você não possui uma assinatura ativa. Assine um plano para criar espaços."
       });
     }
 

@@ -115,10 +115,6 @@ export default function UsuarioDashboard() {
             <Search className="h-4 w-4" />
             <span>Encontrar espaços</span>
           </Button>
-          <Button className="flex items-center gap-2">
-            <Calendar className="h-4 w-4" />
-            <span>Nova Reserva</span>
-          </Button>
         </div>
       </motion.div>
 

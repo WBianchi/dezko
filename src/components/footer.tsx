@@ -20,7 +20,7 @@ export function Footer() {
               <Shield className="w-12 h-12 text-blue-600" />
               <div>
                 <h4 className="font-semibold mb-2">Segurança Garantida</h4>
-                <p className="text-sm text-gray-600">Contratos seguros e verificados</p>
+                <p className="text-sm text-gray-600">Contas seguras e verificadas</p>
               </div>
             </div>
             <div className="flex items-start gap-4">
@@ -41,7 +41,7 @@ export function Footer() {
               <CheckCircle className="w-12 h-12 text-blue-600" />
               <div>
                 <h4 className="font-semibold mb-2">Satisfação Garantida</h4>
-                <p className="text-sm text-gray-600">Política de reembolso em até 7 dias</p>
+                <p className="text-sm text-gray-600">Alugue seu espaço com segurança e praticidade</p>
               </div>
             </div>
           </div>
@@ -112,7 +112,7 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-2 text-gray-600">
                 <MapPin className="w-4 h-4" />
-                Av. Paulista, 1000 - São Paulo
+                Atendimento virtual
               </li>
               <li className="flex items-center gap-2 text-gray-600">
                 <Phone className="w-4 h-4" />

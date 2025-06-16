@@ -25,7 +25,7 @@ export function CTASection() {
           {/* Título e Descrição */}
           <div className="max-w-3xl mx-auto space-y-6 px-4">
             <h2 className={`${poppins.className} text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-tight`}>
-              Encontre o seu{' '}
+              Encontre o{' '}
               <span className="bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
                 espaço perfeito
               </span>
@@ -49,9 +49,9 @@ export function CTASection() {
               <div className="p-4 rounded-xl bg-blue-50 dark:bg-blue-950 mb-6">
                 <Shield className="h-8 w-8 text-blue-600 dark:text-blue-400" />
               </div>
-              <h3 className="font-medium text-xl mb-4">Segurança Garantida</h3>
+              <h3 className="font-medium text-xl mb-4">Diversas opções</h3>
               <p className="text-sm text-muted-foreground">
-                Ambientes seguros e monitorados 24 horas por dia
+               Pague com pix, boleto e cartão de crédito
               </p>
             </motion.div>
 

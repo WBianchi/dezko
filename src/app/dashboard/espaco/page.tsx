@@ -212,9 +212,7 @@ export default function EspacoDashboard() {
               <span className="text-sm font-medium">+{tendenciaReservas}% em reservas</span>
             </div>
           )}
-          <Button className="bg-blue-600 hover:bg-blue-700">
-            Nova Reserva
-          </Button>
+         
         </div>
       </div>
 

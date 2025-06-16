@@ -41,8 +41,8 @@ export default function AgendaPage() {
       <div className="flex-1 space-y-4 p-8 pt-6">
         <div className="flex items-center justify-between">
           <Heading
-            title="Agenda"
-            description="Gerencie as agendas do seu espaço"
+            title="Meus espaços"
+            description="Gerencie todos os seus espaços"
           />
           
           {disponibilidade?.temAgendaDisponivel ? (
@@ -59,7 +59,7 @@ export default function AgendaPage() {
               
               <AddAgendaModal>
                 <Button>
-                  <Plus className="mr-2 h-4 w-4" /> Adicionar Agenda
+                  <Plus className="mr-2 h-4 w-4" /> Adicionar Espaço
                 </Button>
               </AddAgendaModal>
             </div>
@@ -75,9 +75,9 @@ export default function AgendaPage() {
         {!isLoading && !disponibilidade?.temAgendaDisponivel && (
           <Alert className="bg-amber-50 text-amber-700 border-amber-200">
             <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Limite de agendas atingido</AlertTitle>
+            <AlertTitle>Limite de espaços atingido</AlertTitle>
             <AlertDescription>
-              {disponibilidade?.mensagem || "Você atingiu o limite de agendas do seu plano atual. Assine um plano para criar mais agendas."}
+              {disponibilidade?.mensagem || "Você atingiu o limite de espaços do seu plano atual. Assine um plano para criar mais espaços."}
             </AlertDescription>
           </Alert>
         )}
