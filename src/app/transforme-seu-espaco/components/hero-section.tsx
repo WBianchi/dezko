@@ -257,11 +257,12 @@ export function HeroSection() {
                 transition={{ delay: 0.5, duration: 0.8 }}
               >
                 <img 
-                  src="/images/office-space.jpg" 
+                  src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" 
                   alt="Espaço de trabalho moderno" 
-                  className="w-full h-auto object-cover"
+                  className="w-full h-[500px] object-cover"
+                  loading="eager"
                   onError={(e) => {
-                    e.currentTarget.src = "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80";
+                    e.currentTarget.src = "https://images.unsplash.com/photo-1524758631624-e2822e304c36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80";
                   }}
                 />
                 
